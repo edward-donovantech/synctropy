@@ -106,16 +106,68 @@ function severityFromScore(score: number): Severity {
   return "critical"
 }
 
-function buildSignals(node: FileNode, scatter: number, naming: number, temporal: number): string[] {
+function buildSignals(
+  folder: FileNode,
+  scatter: number,
+  naming: number,
+  temporal: number,
+  archiveAfterDays: number,
+  nowMs: number
+): string[] {
   const signals: string[] = []
-  const rootFiles = (node.children ?? []).filter(c => c.type === "file")
-  if (rootFiles.length > 0) signals.push(`${rootFiles.length} file(s) stranded at root`)
 
-  const versionFiles = allFiles(node).filter(f => VERSION_SUFFIX.test(f.name))
-  if (versionFiles.length > 0) signals.push(`${versionFiles.length} file(s) with version suffixes`)
+  // Scatter signals
+  const rootFiles = (folder.children ?? []).filter(c => c.type === "file")
+  if (rootFiles.length > 0) {
+    signals.push(`${rootFiles.length} file(s) stranded at root`)
+  }
+  const folderFileCount = rootFiles.length  // files directly in this folder
+  if (folderFileCount > 50) {
+    signals.push(`${folderFileCount} files in a single folder`)
+  }
 
-  if (temporal >= 10) signals.push("archive candidates mixed with active files")
-  if (temporal >= 16) signals.push("root-level files untouched for 6+ months")
+  // Naming chaos signals
+  const filesInFolder = allFiles(folder)
+  const versionFiles = filesInFolder.filter(f => VERSION_SUFFIX.test(f.name))
+  if (versionFiles.length > 0) {
+    signals.push(`${versionFiles.length} file(s) with version suffixes`)
+  }
+  const datePrefixFiles = filesInFolder.filter(
+    f => DATE_PREFIX.test(f.name) && !f.path.toLowerCase().includes("archive")
+  )
+  if (datePrefixFiles.length > 0) {
+    signals.push(`${datePrefixFiles.length} file(s) with date prefixes`)
+  }
+
+  // Temporal signals — computed independently (not from cumulative score)
+  const filesWithDates = (folder.children ?? []).filter(c => c.type === "file" && c.modifiedAt)
+  if (filesWithDates.length > 0) {
+    const ages = filesWithDates.map(f => (nowMs - new Date(f.modifiedAt!).getTime()) / 86_400_000)
+    const hasActive = ages.some(a => a < archiveAfterDays)
+    const hasOld = ages.some(a => a > archiveAfterDays)
+    if (hasActive && hasOld) {
+      signals.push("archive candidates mixed with active files")
+    }
+
+    const veryOldFiles = filesWithDates.filter(
+      f => (nowMs - new Date(f.modifiedAt!).getTime()) / 86_400_000 > 1095
+    )
+    if (veryOldFiles.length > 0 && !folder.path.toLowerCase().includes("archive")) {
+      signals.push(`${veryOldFiles.length} file(s) older than 3 years outside Archive`)
+    }
+  }
+
+  // Root-level inactivity signal
+  const allFilesInTree = allFiles(folder)
+  const filesWithTimestamps = allFilesInTree.filter(f => f.modifiedAt)
+  if (filesWithTimestamps.length > 0) {
+    const allOld = filesWithTimestamps.every(
+      f => (nowMs - new Date(f.modifiedAt!).getTime()) / 86_400_000 > 180
+    )
+    if (allOld) {
+      signals.push("all files untouched for 6+ months")
+    }
+  }
 
   return signals
 }
@@ -130,7 +182,7 @@ export function scoreEntropy(root: FileNode, archiveAfterDays: number, nowMs: nu
       path: folder.path,
       score,
       severity: severityFromScore(score),
-      signals: buildSignals(folder, scatter, naming, temporal),
+      signals: buildSignals(folder, scatter, naming, temporal, archiveAfterDays, nowMs),
     }
   })
 }
