@@ -116,7 +116,7 @@ export function classifyFile(
     ? (domainConfidence + lifecycleConfidence) / 2
     : domainConfidence
 
-  if (confidence < 0.6) {
+  if (domainConfidence < 0.6 || totalDomainWeight === 0) {
     const candidates = sortedDomains
       .slice(0, 3)
       .map(([domain, score]) => ({

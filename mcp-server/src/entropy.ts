@@ -25,8 +25,12 @@ export function scatterScore(node: FileNode): number {
   let score = 0
 
   const rootFiles = (node.children ?? []).filter(c => c.type === "file")
-  const rootFilePoints = Math.min(rootFiles.length * 10, 33)
-  if (rootFilePoints > 0) score += rootFilePoints
+  const hasFolderChildren = (node.children ?? []).some(c => c.type === "folder")
+  if (rootFiles.length > 3 && !hasFolderChildren) {
+    score += Math.min(rootFiles.length * 10, 33)
+  } else if (rootFiles.length > 0 && hasFolderChildren) {
+    score += Math.min(rootFiles.length * 5, 15)
+  }
 
   const allFilesInTree = allFiles(node)
   const avgDepth = allFilesInTree.length > 0
@@ -118,8 +122,8 @@ function buildSignals(
 
   // Scatter signals
   const rootFiles = (folder.children ?? []).filter(c => c.type === "file")
-  if (rootFiles.length > 0) {
-    signals.push(`${rootFiles.length} file(s) stranded at root`)
+  if (rootFiles.length > 3) {
+    signals.push(`${rootFiles.length} file(s) stored directly in folder without subfolders`)
   }
   const folderFileCount = rootFiles.length  // files directly in this folder
   if (folderFileCount > 50) {
