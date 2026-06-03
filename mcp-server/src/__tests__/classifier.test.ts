@@ -40,7 +40,7 @@ describe("scoreNamePattern", () => {
   })
 
   it("scores resume as admin with high weight", () => {
-    const votes = scoreNamePattern(makeFile({ name: "resume.pdf" }))
+    const votes = scoreNamePattern(makeFile({ name: "my_resume.pdf" }))
     const adminVote = votes.find(v => v.domain === "admin")
     expect(adminVote).toBeDefined()
     expect(adminVote!.weight).toBeGreaterThanOrEqual(0.8)
@@ -48,6 +48,16 @@ describe("scoreNamePattern", () => {
 
   it("returns empty for a file with no matching patterns", () => {
     expect(scoreNamePattern(makeFile({ name: "zzz_unknownfile.pdf" }))).toEqual([])
+  })
+
+  it("scores underscore-prefixed tax filename as finance", () => {
+    const votes = scoreNamePattern(makeFile({ name: "tax_return_2024.pdf" }))
+    expect(votes.some(v => v.domain === "finance")).toBe(true)
+  })
+
+  it("scores underscore-prefixed id filename as admin", () => {
+    const votes = scoreNamePattern(makeFile({ name: "id_card.pdf" }))
+    expect(votes.some(v => v.domain === "admin")).toBe(true)
   })
 })
 

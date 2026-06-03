@@ -24,15 +24,15 @@ export const EXTENSION_DOMAIN_MAP: Record<string, Domain[]> = {
 
 export const NAME_PATTERNS: Array<{ pattern: RegExp; domain: Domain; weight: number }> = [
   { pattern: /invoice|receipt|statement|payment/i,        domain: "finance",   weight: 0.8 },
-  { pattern: /\btax\b|w-?2\b|1099/i,                     domain: "finance",   weight: 0.9 },
+  { pattern: /(?<![a-z])tax(?![a-z])|w-?2\b|1099/i,      domain: "finance",   weight: 0.9 },
   { pattern: /bank|balance|budget/i,                      domain: "finance",   weight: 0.7 },
   { pattern: /contract|agreement|sow|proposal|quote/i,   domain: "projects",  weight: 0.7 },
   { pattern: /brief|deliverable|milestone/i,              domain: "projects",  weight: 0.6 },
-  { pattern: /\bresume\b|\bcv\b|curriculum.vitae/i,       domain: "admin",     weight: 0.9 },
-  { pattern: /license|insurance|passport|\bida?\b|legal/i, domain: "admin",   weight: 0.8 },
+  { pattern: /(?<![a-z])resume(?![a-z])|(?<![a-z])cv(?![a-z])|curriculum.vitae/i, domain: "admin", weight: 0.9 },
+  { pattern: /license|insurance|passport|(?<![a-z])ida?(?![a-z])|legal/i, domain: "admin", weight: 0.8 },
   { pattern: /img_|dsc_|screenshot|photo|pic_/i,          domain: "media",     weight: 0.7 },
   { pattern: /readme|notes|meeting|how.?to|tutorial/i,    domain: "reference", weight: 0.7 },
-  { pattern: /email|message|\bchat\b|slack/i,             domain: "comms",     weight: 0.8 },
+  { pattern: /email|message|(?<![a-z])chat(?![a-z])|slack/i, domain: "comms", weight: 0.8 },
 ]
 
 export const PATH_CONTEXT_PATTERNS: Array<{ pattern: RegExp; domain: Domain; weight: number }> = [
