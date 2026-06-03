@@ -18,7 +18,9 @@ export function buildOperations(
     const targetFolder = c.suggestedPath.split("/").slice(0, -1).join("/")
     foldersToCreate.add(targetFolder)
 
-    const isCritical = [...criticalPaths].some(cp => c.path.startsWith(cp))
+    const isCritical = [...criticalPaths].some(cp =>
+      c.path === cp || c.path.startsWith(cp + "/")
+    )
     ops.push({
       type: "move",
       from: c.path,

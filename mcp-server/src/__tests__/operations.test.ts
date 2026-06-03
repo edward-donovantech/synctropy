@@ -68,4 +68,17 @@ describe("buildOperations", () => {
     const ops = buildOperations(classifications, [])
     expect(ops.filter(o => o.type === "move").length).toBe(0)
   })
+
+  it("does not assign high priority to files in sibling folders of critical paths", () => {
+    const classifications: Classification[] = [{
+      path: "/chaos2/invoice.pdf",
+      domain: "finance",
+      lifecycle: "active",
+      confidence: 0.9,
+      suggestedPath: "Active/Finance/invoice.pdf",
+    }]
+    const ops = buildOperations(classifications, [criticalEntry("/chaos")])
+    const move = ops.find(o => o.type === "move")
+    expect(move?.priority).not.toBe("high")
+  })
 })
