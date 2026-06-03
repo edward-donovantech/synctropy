@@ -49,25 +49,28 @@ export const ClassificationSchema = z.object({
   path: z.string(),
   domain: DomainSchema,
   lifecycle: LifecycleSchema,
-  confidence: z.number(),
+  confidence: z.number().min(0).max(1),
   suggestedPath: z.string(),
 })
 export type Classification = z.infer<typeof ClassificationSchema>
 
+export const TriageCandidateSchema = z.object({
+  domain: DomainSchema,
+  lifecycle: LifecycleSchema,
+  confidence: z.number().min(0).max(1),
+})
+export type TriageCandidate = z.infer<typeof TriageCandidateSchema>
+
 export const TriageItemSchema = z.object({
   path: z.string(),
-  topCandidates: z.array(z.object({
-    domain: z.string(),
-    lifecycle: z.string(),
-    confidence: z.number(),
-  })),
+  topCandidates: z.array(TriageCandidateSchema),
   reason: z.string(),
 })
 export type TriageItem = z.infer<typeof TriageItemSchema>
 
 export const EntropyEntrySchema = z.object({
   path: z.string(),
-  score: z.number(),
+  score: z.number().min(0).max(100),
   severity: SeveritySchema,
   signals: z.array(z.string()),
 })
