@@ -105,7 +105,7 @@ export function classifyFile(
   const sortedDomains = [...domainTotals.entries()].sort((a, b) => b[1] - a[1])
   const topScore = sortedDomains[0][1]
   const secondScore = sortedDomains[1]?.[1] ?? 0
-  const domainConfidence = topScore / (topScore + secondScore || 1)
+  const domainConfidence = secondScore === 0 ? 1 : topScore / (topScore + secondScore)
 
   const lifecycleConfidence = totalLifecycleWeight > 0 && topLifecycleEntry
     ? topLifecycleEntry[1] / totalLifecycleWeight
@@ -122,7 +122,7 @@ export function classifyFile(
       .map(([domain, score]) => ({
         domain,
         lifecycle: topLifecycle,
-        confidence: score / (topScore + secondScore || 1),
+        confidence: secondScore === 0 ? 1 : score / (topScore + secondScore),
       }))
 
     return {

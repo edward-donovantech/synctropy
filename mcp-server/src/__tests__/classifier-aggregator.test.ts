@@ -60,6 +60,15 @@ describe("classifyFile", () => {
     ) as Classification
     expect(result.lifecycle).toBe("archive")
   })
+
+  it("defaults lifecycle to active when modifiedAt is absent but file classifies", () => {
+    const result = classifyFile(
+      makeFile({ name: "invoice.pdf", path: "/invoice.pdf", modifiedAt: undefined }),
+      365,
+      NOW_MS
+    ) as Classification
+    expect(result.lifecycle).toBe("active")
+  })
 })
 
 describe("classifyFiles", () => {
