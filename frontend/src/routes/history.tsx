@@ -15,7 +15,7 @@ function DeltaHeadline({ scans }: { scans: ScanSummary[] }) {
   return (
     <div className="mb-6">
       <p className={`text-3xl font-bold ${improved ? 'text-green-400' : 'text-red-400'}`}>
-        {improved ? '↓' : '↑'} {Math.abs(diff).toFixed(0)} pts{' '}
+        {improved ? '↓' : '↑'} {Math.round(Math.abs(diff) * 100)} pts{' '}
         <span className="text-sm font-normal text-slate-400">since last scan</span>
       </p>
       <p className="text-xs text-slate-500 mt-1">

@@ -8,13 +8,14 @@ type Props = {
   onSelect: (id: string) => void
 }
 
-type ChartPoint = { id: string; date: string; score: number }
+type ChartPoint = { id: string; date: string; score: number; index: number }
 
 export function TrendChart({ scans, selectedId, onSelect }: Props) {
-  const data: ChartPoint[] = [...scans].reverse().map(s => ({
+  const data: ChartPoint[] = [...scans].reverse().map((s, i) => ({
     id: s.id,
     date: format(new Date(s.scanned_at), 'MMM d'),
     score: Math.round(s.overall_score * 100) / 100,
+    index: i,
   }))
 
   return (
@@ -36,7 +37,8 @@ export function TrendChart({ scans, selectedId, onSelect }: Props) {
             </linearGradient>
           </defs>
           <XAxis
-            dataKey="date"
+            dataKey="index"
+            tickFormatter={(i: number) => data[i]?.date ?? ''}
             tick={{ fill: '#555', fontSize: 11 }}
             axisLine={false}
             tickLine={false}
@@ -48,7 +50,7 @@ export function TrendChart({ scans, selectedId, onSelect }: Props) {
           />
           {selectedId && (
             <ReferenceLine
-              x={data.find(d => d.id === selectedId)?.date}
+              x={data.find(d => d.id === selectedId)?.index}
               stroke="#a78bfa"
               strokeDasharray="4 2"
             />

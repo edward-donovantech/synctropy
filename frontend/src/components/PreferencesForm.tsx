@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { z } from 'zod'
 import { usePreferences } from '../lib/queries'
 import { Button } from './ui/button'
@@ -35,6 +35,17 @@ export function PreferencesForm() {
         }
       : DEFAULTS
   )
+  useEffect(() => {
+    if (saved) {
+      setValues({
+        root_path: saved.root_path,
+        ignore_paths: saved.ignore_paths,
+        archive_after_days: saved.archive_after_days,
+        taxonomy_domains: saved.taxonomy_domains,
+      })
+    }
+  }, [saved])
+
   const [pathInput, setPathInput] = useState('')
   const [domainInput, setDomainInput] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})

@@ -8,7 +8,10 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) navigate('/login', { replace: true })
+      if (!session) {
+        navigate('/login', { replace: true })
+        return
+      }
       setChecking(false)
     })
 
