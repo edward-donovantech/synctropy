@@ -1,3 +1,11 @@
+import { Toaster } from 'sonner'
+import { PreferencesForm } from '../components/PreferencesForm'
+
 export default function SettingsPage() {
-  return <div className="text-slate-400">Settings — coming soon</div>
+  return (
+    <>
+      <PreferencesForm />
+      <Toaster />
+    </>
+  )
 }
