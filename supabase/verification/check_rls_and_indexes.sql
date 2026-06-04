@@ -4,19 +4,19 @@
 -- ============================================================
 
 -- 1. RLS enabled check
--- BEFORE: rowsecurity = false for all three tables
+-- BEFORE: rowsecurity = false for entropy_scans; true for the other two (partial run)
 -- AFTER:  rowsecurity = true for all three tables
 SELECT tablename, rowsecurity
 FROM pg_tables
 WHERE schemaname = 'public'
-  AND tablename IN ('waitlist', 'user_preferences', 'entropy_scores')
+  AND tablename IN ('waitlist', 'user_preferences', 'entropy_scans')
 ORDER BY tablename;
 
 -- 2. Policy existence check
--- BEFORE: 0 rows
+-- BEFORE: 0 rows (dashboard policies were dropped by the migration)
 -- AFTER:  exactly 6 rows:
---   entropy_scores    | user_insert_own_entropy_scores | INSERT  | {authenticated}
---   entropy_scores    | user_select_own_entropy_scores | SELECT  | {authenticated}
+--   entropy_scans     | user_insert_own_entropy_scans  | INSERT  | {authenticated}
+--   entropy_scans     | user_select_own_entropy_scans  | SELECT  | {authenticated}
 --   user_preferences  | user_insert_own_preferences    | INSERT  | {authenticated}
 --   user_preferences  | user_select_own_preferences    | SELECT  | {authenticated}
 --   user_preferences  | user_update_own_preferences    | UPDATE  | {authenticated}
@@ -24,20 +24,20 @@ ORDER BY tablename;
 SELECT tablename, policyname, cmd, roles
 FROM pg_policies
 WHERE schemaname = 'public'
-  AND tablename IN ('waitlist', 'user_preferences', 'entropy_scores')
+  AND tablename IN ('waitlist', 'user_preferences', 'entropy_scans')
 ORDER BY tablename, policyname;
 
 -- 3. Index existence check
 -- BEFORE: 0 rows
 -- AFTER:  exactly 4 rows:
---   entropy_scores    | idx_entropy_scores_user_id
---   entropy_scores    | idx_entropy_scores_user_id_created_at
+--   entropy_scans     | idx_entropy_scans_user_id
+--   entropy_scans     | idx_entropy_scans_user_id_created_at
 --   user_preferences  | idx_user_preferences_user_id
 --   waitlist          | idx_waitlist_email
 SELECT indexname, tablename
 FROM pg_indexes
 WHERE schemaname = 'public'
-  AND tablename IN ('waitlist', 'user_preferences', 'entropy_scores')
+  AND tablename IN ('waitlist', 'user_preferences', 'entropy_scans')
   AND indexname LIKE 'idx_%'
 ORDER BY tablename, indexname;
 

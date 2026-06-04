@@ -68,9 +68,11 @@ Operations applied in this order per table:
 
 ---
 
-### entropy_scores
+### entropy_scans
 
 **Purpose:** Per-scan records. One row per scan per user. Append-only — scan history is immutable from the client.
+
+> **Note:** Table is named `entropy_scans` in the live DB (not `entropy_scores` as initially stated).
 
 | Operation | Role | Allowed |
 |-----------|------|---------|
@@ -88,6 +90,15 @@ Operations applied in this order per table:
 - `INDEX` on `(user_id, created_at DESC)` — optimizes time-ordered scan history queries (primary dashboard read pattern)
 
 ---
+
+## Pre-existing Dashboard Policies
+
+The live DB had two policies created via the Supabase dashboard before CLI migrations were established. The migration explicitly drops them before creating the correct ones:
+
+| Table | Dashboard policy | Problem |
+|-------|-----------------|---------|
+| `waitlist` | `"Anyone can join waitlist"` (INSERT) | Name mismatch; possibly allows authenticated role too |
+| `user_preferences` | `"Users manage own preferences"` (ALL) | ALL includes DELETE — too permissive |
 
 ## What This Does Not Cover
 
