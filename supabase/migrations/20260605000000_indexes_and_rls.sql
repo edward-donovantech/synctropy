@@ -31,6 +31,7 @@ CREATE POLICY "anon_insert_waitlist"
 -- ============================================================
 
 -- Drop pre-existing dashboard policy (cmd=ALL, includes DELETE — too permissive)
+-- Note: user_preferences uses `id` as the user identifier (id = auth.uid()), no user_id column.
 DROP POLICY IF EXISTS "Users manage own preferences" ON public.user_preferences;
 DROP POLICY IF EXISTS "user_select_own_preferences" ON public.user_preferences;
 DROP POLICY IF EXISTS "user_insert_own_preferences" ON public.user_preferences;
@@ -40,20 +41,20 @@ CREATE POLICY "user_select_own_preferences"
   ON public.user_preferences
   FOR SELECT
   TO authenticated
-  USING (user_id = auth.uid());
+  USING (id = auth.uid());
 
 CREATE POLICY "user_insert_own_preferences"
   ON public.user_preferences
   FOR INSERT
   TO authenticated
-  WITH CHECK (user_id = auth.uid());
+  WITH CHECK (id = auth.uid());
 
 CREATE POLICY "user_update_own_preferences"
   ON public.user_preferences
   FOR UPDATE
   TO authenticated
-  USING (user_id = auth.uid())
-  WITH CHECK (user_id = auth.uid());
+  USING (id = auth.uid())
+  WITH CHECK (id = auth.uid());
 
 -- ============================================================
 -- entropy_scans
@@ -84,14 +85,13 @@ CREATE POLICY "user_insert_own_entropy_scans"
 CREATE UNIQUE INDEX IF NOT EXISTS idx_waitlist_email
   ON public.waitlist (email);
 
--- user_preferences: unique user_id enforces one-row-per-user at the DB level
-CREATE UNIQUE INDEX IF NOT EXISTS idx_user_preferences_user_id
-  ON public.user_preferences (user_id);
+-- user_preferences: id IS the PK and already has a unique btree index — no extra index needed.
 
 -- entropy_scans: user_id for filtering all rows belonging to one user
 CREATE INDEX IF NOT EXISTS idx_entropy_scans_user_id
   ON public.entropy_scans (user_id);
 
 -- entropy_scans: composite index for time-ordered scan history (primary dashboard read)
-CREATE INDEX IF NOT EXISTS idx_entropy_scans_user_id_created_at
-  ON public.entropy_scans (user_id, created_at DESC);
+-- Uses scanned_at (the actual timestamp column name in this table)
+CREATE INDEX IF NOT EXISTS idx_entropy_scans_user_id_scanned_at
+  ON public.entropy_scans (user_id, scanned_at DESC);

@@ -29,11 +29,11 @@ ORDER BY tablename, policyname;
 
 -- 3. Index existence check
 -- BEFORE: 0 rows
--- AFTER:  exactly 4 rows:
---   entropy_scans     | idx_entropy_scans_user_id
---   entropy_scans     | idx_entropy_scans_user_id_created_at
---   user_preferences  | idx_user_preferences_user_id
---   waitlist          | idx_waitlist_email
+-- AFTER:  exactly 3 rows:
+--   entropy_scans  | idx_entropy_scans_user_id
+--   entropy_scans  | idx_entropy_scans_user_id_scanned_at
+--   waitlist       | idx_waitlist_email
+-- (user_preferences has no extra index — id is the PK and already indexed)
 SELECT indexname, tablename
 FROM pg_indexes
 WHERE schemaname = 'public'
