@@ -1,9 +1,15 @@
-import { describe, it, expect } from "vitest"
+import { describe, it, expect, vi, beforeEach } from "vitest"
 import { classifyFiles } from "../classifier"
 import { scoreEntropy } from "../entropy"
 import { buildOperations } from "../operations"
 import { buildSummary } from "../summary"
 import { FileNode, AnalyzeStructureOutput } from "../types"
+import { analyzeStructureHandler } from "../handler"
+import * as persistence from "../persistence"
+
+vi.mock("../persistence", () => ({
+  persistScan: vi.fn().mockResolvedValue(undefined),
+}))
 
 const NOW_MS = new Date("2026-06-03T00:00:00Z").getTime()
 const ARCHIVE_AFTER = 365
@@ -147,5 +153,48 @@ describe("analyzeStructure (integration)", () => {
     const result = analyzeStructure(bareTree)
     expect(result.entropyMap).toBeDefined()
     expect(result.classifications.length + result.triage.length).toBe(2)
+  })
+})
+
+describe("analyzeStructureHandler — persistence", () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it("calls persistScan with correct payload when userId is provided", async () => {
+    const result = await analyzeStructureHandler({ root: REALISTIC_TREE, userId: "user-123" })
+    expect(persistence.persistScan).toHaveBeenCalledOnce()
+    expect(persistence.persistScan).toHaveBeenCalledWith(expect.objectContaining({
+      user_id: "user-123",
+      root_path: "/",
+      folder_scores: result.entropyMap,
+      operation_count: result.operations.length,
+      triage_count: result.triage.length,
+    }))
+  })
+
+  it("passes a valid ISO scanned_at timestamp", async () => {
+    await analyzeStructureHandler({ root: REALISTIC_TREE, userId: "user-123" })
+    const call = vi.mocked(persistence.persistScan).mock.calls[0][0]
+    expect(() => new Date(call.scanned_at).toISOString()).not.toThrow()
+  })
+
+  it("overall_score matches the root entropy entry", async () => {
+    const result = await analyzeStructureHandler({ root: REALISTIC_TREE, userId: "user-123" })
+    const rootEntry = result.entropyMap.find(e => e.path === "/")
+    const call = vi.mocked(persistence.persistScan).mock.calls[0][0]
+    expect(call.overall_score).toBe(rootEntry!.score)
+  })
+
+  it("does not call persistScan when userId is absent", async () => {
+    await analyzeStructureHandler({ root: REALISTIC_TREE })
+    expect(persistence.persistScan).not.toHaveBeenCalled()
+  })
+
+  it("still returns a valid analysis result when persistScan rejects", async () => {
+    vi.mocked(persistence.persistScan).mockRejectedValueOnce(new Error("DB down"))
+    const result = await analyzeStructureHandler({ root: REALISTIC_TREE, userId: "user-123" })
+    expect(result.entropyMap.length).toBeGreaterThan(0)
+    expect(result.summary.length).toBeGreaterThan(20)
   })
 })
