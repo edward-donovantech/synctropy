@@ -31,7 +31,7 @@ export type UserPreferences = z.infer<typeof UserPreferencesSchema>
 export const AnalyzeStructureInputSchema = z.object({
   root: FileNodeSchema,
   userPreferences: UserPreferencesSchema.optional(),
-  userId: z.string().optional(),
+  userId: z.string().uuid().optional(),
 })
 export type AnalyzeStructureInput = z.infer<typeof AnalyzeStructureInputSchema>
 

@@ -1,12 +1,5 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js"
-import { EntropyEntry } from "./types"
-
-export interface ScanRecord {
-  user_id: string
-  scanned_at: string
-  overall_score: number
-  folder_scores: EntropyEntry[]
-}
+import { AnalyzeStructureOutput } from "./types"
 
 let _client: SupabaseClient | null = null
 
@@ -19,9 +12,15 @@ function getClient(): SupabaseClient | null {
   return _client
 }
 
-export async function persistScan(record: ScanRecord): Promise<void> {
+export async function persistScan(userId: string, result: AnalyzeStructureOutput): Promise<void> {
   const client = getClient()
   if (!client) return
+  const record = {
+    user_id: userId,
+    scanned_at: new Date().toISOString(),
+    overall_score: result.entropyMap[0]?.score ?? 0,
+    folder_scores: result.entropyMap,
+  }
   try {
     const { error } = await client.from("entropy_scans").insert(record)
     if (error) console.error("[synctropy] failed to persist scan:", error.message)

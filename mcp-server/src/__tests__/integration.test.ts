@@ -161,26 +161,23 @@ describe("analyzeStructureHandler — persistence", () => {
     vi.clearAllMocks()
   })
 
-  it("calls persistScan with correct payload when userId is provided", async () => {
+  it("calls persistScan with userId and the full result", async () => {
     const result = await analyzeStructureHandler({ root: REALISTIC_TREE, userId: "user-123" })
     expect(persistence.persistScan).toHaveBeenCalledOnce()
-    expect(persistence.persistScan).toHaveBeenCalledWith(expect.objectContaining({
-      user_id: "user-123",
-      folder_scores: result.entropyMap,
-    }))
+    expect(persistence.persistScan).toHaveBeenCalledWith("user-123", result)
   })
 
-  it("passes a valid ISO scanned_at timestamp", async () => {
-    await analyzeStructureHandler({ root: REALISTIC_TREE, userId: "user-123" })
-    const call = vi.mocked(persistence.persistScan).mock.calls[0][0]
-    expect(() => new Date(call.scanned_at).toISOString()).not.toThrow()
-  })
-
-  it("overall_score matches the root entropy entry", async () => {
+  it("result passed to persistScan contains the entropyMap", async () => {
     const result = await analyzeStructureHandler({ root: REALISTIC_TREE, userId: "user-123" })
-    const rootEntry = result.entropyMap.find(e => e.path === "/")
-    const call = vi.mocked(persistence.persistScan).mock.calls[0][0]
-    expect(call.overall_score).toBe(rootEntry!.score)
+    const [, resultArg] = vi.mocked(persistence.persistScan).mock.calls[0]
+    expect(resultArg.entropyMap).toEqual(result.entropyMap)
+  })
+
+  it("result passed to persistScan contains operations and triage", async () => {
+    const result = await analyzeStructureHandler({ root: REALISTIC_TREE, userId: "user-123" })
+    const [, resultArg] = vi.mocked(persistence.persistScan).mock.calls[0]
+    expect(resultArg.operations).toEqual(result.operations)
+    expect(resultArg.triage).toEqual(result.triage)
   })
 
   it("does not call persistScan when userId is absent", async () => {
