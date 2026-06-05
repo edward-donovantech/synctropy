@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(Get-ChildItem *)",
+      "Bash(npm install *)",
+      "PowerShell(New-Item *)",
+      "Bash(npm test *)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\ejose\\\\dev\\\\synctropy-mcp-server\\\\mcp-server\" -Recurse -Force | Where-Object { $_.PSPath -notmatch \"node_modules\" } | Select-Object FullName)",
+      "Bash(git commit *)",
+      "Bash(npx tsc *)",
+      "Bash(npm ls *)",
+      "Bash(npm list *)",
+      "Bash(node -e ' *)",
+      "Bash(node *)",
+      "Bash(dir C:\\\\Users\\\\ejose\\\\dev\\\\synctropy-mcp-server\\\\mcp-server\\\\src *)"
+    ]
+  }
+}
