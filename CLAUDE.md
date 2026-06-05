@@ -10,6 +10,10 @@ Intelligence layer only - never owns OAuth or file access.
 - /supabase - Schema, migrations, typed client
 - /shared - TypeScript types
 
+## Frontend scope
+- /dashboard - authenticated user preferences + entropy history
+- Lovable owns the landing page (getsynctropy.com) - do NOT recreate it here
+
 ## Key decisions
 - MCP server returns structured prompts, not raw data
 - AI client handles all storage OAuth
