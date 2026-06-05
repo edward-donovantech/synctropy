@@ -16,5 +16,8 @@
       "Bash(node *)",
       "Bash(dir C:\\\\Users\\\\ejose\\\\dev\\\\synctropy-mcp-server\\\\mcp-server\\\\src *)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
 }

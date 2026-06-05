@@ -166,10 +166,7 @@ describe("analyzeStructureHandler — persistence", () => {
     expect(persistence.persistScan).toHaveBeenCalledOnce()
     expect(persistence.persistScan).toHaveBeenCalledWith(expect.objectContaining({
       user_id: "user-123",
-      root_path: "/",
       folder_scores: result.entropyMap,
-      operation_count: result.operations.length,
-      triage_count: result.triage.length,
     }))
   })
 

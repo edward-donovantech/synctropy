@@ -4,11 +4,8 @@ import { EntropyEntry } from "./types"
 export interface ScanRecord {
   user_id: string
   scanned_at: string
-  root_path: string
   overall_score: number
   folder_scores: EntropyEntry[]
-  operation_count: number
-  triage_count: number
 }
 
 let _client: SupabaseClient | null = null
@@ -25,6 +22,10 @@ function getClient(): SupabaseClient | null {
 export async function persistScan(record: ScanRecord): Promise<void> {
   const client = getClient()
   if (!client) return
-  const { error } = await client.from("entropy_scans").insert(record)
-  if (error) console.error("[synctropy] failed to persist scan:", error.message)
+  try {
+    const { error } = await client.from("entropy_scans").insert(record)
+    if (error) console.error("[synctropy] failed to persist scan:", error.message)
+  } catch (err) {
+    console.error("[synctropy] unexpected error persisting scan:", err)
+  }
 }

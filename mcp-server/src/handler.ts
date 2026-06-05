@@ -18,11 +18,8 @@ export async function analyzeStructureHandler(input: AnalyzeStructureInput): Pro
     void persistScan({
       user_id: input.userId,
       scanned_at: new Date().toISOString(),
-      root_path: input.root.path,
       overall_score: entropyMap.find(e => e.path === input.root.path)?.score ?? 0,
       folder_scores: entropyMap,
-      operation_count: operations.length,
-      triage_count: triage.length,
     })
   }
 
