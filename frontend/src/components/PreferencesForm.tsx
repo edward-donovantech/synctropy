@@ -11,6 +11,7 @@ export const preferencesSchema = z.object({
   ignore_paths: z.array(z.string()).default([]),
   archive_after_days: z.number().int().min(30).max(730),
   taxonomy_domains: z.array(z.string().min(1)).min(1),
+  storage_mode: z.enum(['drive', 'supabase', 'both']).default('drive'),
 })
 
 export type PreferencesFormValues = z.infer<typeof preferencesSchema>
@@ -20,6 +21,7 @@ const DEFAULTS: PreferencesFormValues = {
   ignore_paths: [],
   archive_after_days: 365,
   taxonomy_domains: ['projects', 'finance', 'admin', 'media', 'reference'],
+  storage_mode: 'drive',
 }
 
 export function PreferencesForm() {
@@ -32,6 +34,7 @@ export function PreferencesForm() {
           ignore_paths: saved.ignore_paths,
           archive_after_days: saved.archive_after_days,
           taxonomy_domains: saved.taxonomy_domains,
+          storage_mode: saved.storage_mode ?? 'drive',
         }
       : DEFAULTS
   )
@@ -42,6 +45,7 @@ export function PreferencesForm() {
         ignore_paths: saved.ignore_paths,
         archive_after_days: saved.archive_after_days,
         taxonomy_domains: saved.taxonomy_domains,
+        storage_mode: saved.storage_mode ?? 'drive',
       })
     }
   }, [saved])
@@ -66,6 +70,7 @@ export function PreferencesForm() {
       ignore_paths: result.data.ignore_paths,
       archive_after_days: result.data.archive_after_days,
       taxonomy_domains: result.data.taxonomy_domains,
+      storage_mode: result.data.storage_mode,
     }, {
       onSuccess: () => toast('Preferences saved'),
       onError: () => toast.error("Couldn't save — try again"),
@@ -195,6 +200,41 @@ export function PreferencesForm() {
         </div>
         {fieldErrors.taxonomy_domains && (
           <p className="text-xs text-red-400">{fieldErrors.taxonomy_domains}</p>
+        )}
+      </div>
+
+      {/* Premium plan */}
+      <div className="space-y-3">
+        <Label className="text-slate-300">Plan</Label>
+        <div className="flex items-center gap-3">
+          <span className={`px-2.5 py-0.5 rounded text-xs font-semibold ${
+            saved?.is_premium
+              ? 'bg-violet-500/20 text-violet-300 border border-violet-500/40'
+              : 'bg-slate-700/40 text-slate-400 border border-slate-600/40'
+          }`}>
+            {saved?.is_premium ? 'Premium' : 'Free'}
+          </span>
+          {!saved?.is_premium && (
+            <span className="text-xs text-slate-500">Upgrade for cloud artifact storage</span>
+          )}
+        </div>
+
+        {saved?.is_premium && (
+          <div className="space-y-1">
+            <Label htmlFor="storage_mode" className="text-slate-300">Storage mode</Label>
+            <p className="text-xs text-slate-500">Where pipeline skill artifacts are written.</p>
+            <select
+              id="storage_mode"
+              aria-label="Storage mode"
+              value={values.storage_mode}
+              onChange={e => setValues(v => ({ ...v, storage_mode: e.target.value as 'drive' | 'supabase' | 'both' }))}
+              className="w-full bg-[#13131f] border border-[#2a2a3e] text-slate-200 text-sm rounded px-3 py-2"
+            >
+              <option value="drive">Drive only (default)</option>
+              <option value="supabase">Supabase only</option>
+              <option value="both">Both Drive and Supabase</option>
+            </select>
+          </div>
         )}
       </div>
 
