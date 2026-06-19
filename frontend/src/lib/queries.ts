@@ -21,7 +21,7 @@ export function usePreferences() {
   })
 
   const mutation = useMutation({
-    mutationFn: async (prefs: Omit<UserPreferences, 'id' | 'updated_at'>) => {
+    mutationFn: async (prefs: Omit<UserPreferences, 'id' | 'updated_at' | 'is_premium'>) => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('Not authenticated')
       const { data, error } = await supabase

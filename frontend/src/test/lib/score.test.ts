@@ -34,3 +34,27 @@ describe('scoreBorderClass', () => {
     expect(scoreBorderClass(0.3)).toBe('border-green-400/30')
   })
 })
+
+import type { UserPreferences, StorageMode } from '../../types'
+
+describe('UserPreferences type', () => {
+  it('includes is_premium and storage_mode fields', () => {
+    const pref: UserPreferences = {
+      id: 'abc',
+      root_path: null,
+      ignore_paths: [],
+      archive_after_days: 365,
+      taxonomy_domains: ['projects'],
+      is_premium: false,
+      storage_mode: 'drive',
+      updated_at: new Date().toISOString(),
+    }
+    expect(pref.is_premium).toBe(false)
+    expect(pref.storage_mode).toBe('drive')
+  })
+
+  it('accepts all three storage_mode values', () => {
+    const modes: StorageMode[] = ['drive', 'supabase', 'both']
+    expect(modes).toHaveLength(3)
+  })
+})
