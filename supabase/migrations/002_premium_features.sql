@@ -29,4 +29,6 @@ CREATE POLICY "Users can view own artifacts"
   TO authenticated
   USING (user_id = auth.uid());
 
--- No client INSERT/UPDATE/DELETE — service_role writes only
+-- No INSERT/UPDATE/DELETE policies are defined intentionally.
+-- With RLS enabled and no matching policy, Postgres denies by default (Supabase semantics).
+-- Only the service_role key (used by the MCP server) can write rows — it bypasses RLS entirely.
