@@ -1,6 +1,4 @@
 node_modules
-src
-*.test.*
-tsconfig.json
+dist
 .env
 .env.local
