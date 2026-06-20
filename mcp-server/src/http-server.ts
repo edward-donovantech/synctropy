@@ -15,12 +15,27 @@ function getAuthClient(): SupabaseClient {
   return _authClient
 }
 
-async function validateToken(authHeader: string | undefined): Promise<string | null> {
+async function validateApiKey(key: string): Promise<string | null> {
+  const serverKey = process.env.MCP_API_KEY
+  if (!serverKey || key !== serverKey) return null
+  // API key auth: userId stored in env (single-user personal server)
+  return process.env.MCP_USER_ID ?? null
+}
+
+async function validateJwt(authHeader: string | undefined): Promise<string | null> {
   if (!authHeader?.startsWith("Bearer ")) return null
   const token = authHeader.slice(7)
   const { data: { user }, error } = await getAuthClient().auth.getUser(token)
   if (error || !user) return null
   return user.id
+}
+
+async function authenticate(req: Request): Promise<string | null> {
+  // API key via query param (for connector UI that can't set headers)
+  const queryKey = typeof req.query.key === "string" ? req.query.key : null
+  if (queryKey) return validateApiKey(queryKey)
+  // JWT Bearer token (for Claude Code / direct API use)
+  return validateJwt(req.headers.authorization)
 }
 
 export async function buildApp(): Promise<Express> {
@@ -33,11 +48,10 @@ export async function buildApp(): Promise<Express> {
   })
 
   app.post("/mcp", async (req: Request, res: Response) => {
-    const userId = await validateToken(req.headers.authorization)
+    const userId = await authenticate(req)
 
     if (!userId) {
-      const missing = !req.headers.authorization
-      res.status(401).json({ error: missing ? "Missing Authorization header" : "Unauthorized" })
+      res.status(401).json({ error: "Unauthorized" })
       return
     }
 

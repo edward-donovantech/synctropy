@@ -34,7 +34,7 @@ describe('HTTP MCP server', () => {
   it('rejects requests without Authorization header', async () => {
     const res = await request(app).post('/mcp').send({})
     expect(res.status).toBe(401)
-    expect(res.body.error).toMatch(/missing/i)
+    expect(res.body.error).toMatch(/unauthorized/i)
   })
 
   it('rejects requests with invalid token', async () => {
