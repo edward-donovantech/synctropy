@@ -4,7 +4,8 @@ import mimetypes
 
 def find_folder(service, name: str, parent_id: str | None = None) -> str | None:
     """Return the Drive file ID of the first folder matching name, or None."""
-    q = f"name = '{name}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+    safe_name = name.replace("'", "\\'")
+    q = f"name = '{safe_name}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
     if parent_id:
         q += f" and '{parent_id}' in parents"
     results = service.files().list(q=q, fields="files(id, name)").execute()
