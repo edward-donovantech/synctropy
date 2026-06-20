@@ -26,10 +26,10 @@ def _ensure_folder_path(service, path: str, root_id: str, folder_cache: dict) ->
     return current_id
 
 
-def create_structure(service, template: dict, templates_dir: str) -> tuple[int, int]:
+def create_structure(service, template: dict, templates_dir: str) -> tuple[int, int, str]:
     """
     Create the root folder, all subfolders, and upload all files from template.
-    Returns (folder_count, file_count).
+    Returns (folder_count, file_count, root_id).
     """
     root_name = template["root"]
     files = template["files"]
@@ -58,7 +58,7 @@ def create_structure(service, template: dict, templates_dir: str) -> tuple[int, 
         for future in as_completed(futures):
             future.result()  # raises on error
             file_count += 1
-            if file_count % 10 == 0:
+            if file_count % 10 == 0 or file_count == len(files):
                 print(f"  uploaded {file_count}/{len(files)}...")
 
-    return folder_count, file_count
+    return folder_count, file_count, root_id

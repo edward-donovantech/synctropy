@@ -34,12 +34,8 @@ def main():
     wipe_test_root(service, template["root"], skip_confirm=args.yes)
 
     print(f"Creating '{template['root']}'...")
-    folder_count, file_count = create_structure(service, template, TEMPLATES_DIR)
-
-    # Get the root folder URL
-    from drive import find_folder
-    root_id = find_folder(service, template["root"])
-    url = f"https://drive.google.com/drive/folders/{root_id}" if root_id else "(not found)"
+    folder_count, file_count, root_id = create_structure(service, template, TEMPLATES_DIR)
+    url = f"https://drive.google.com/drive/folders/{root_id}"
 
     print(f"\n{template['root']} created: {folder_count} folders, {file_count} files")
     print(f"Root: {url}")

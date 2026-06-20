@@ -1,3 +1,4 @@
+# One-time generator — templates are already committed. Do not re-run.
 """Run once to generate blank template files. Output is committed to the repo."""
 import os
 from pathlib import Path
