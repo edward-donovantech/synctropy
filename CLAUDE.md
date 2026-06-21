@@ -43,10 +43,26 @@ source of truth for rules and the record of what happened.
 - `get_user_config` — returns is_premium + storage_mode for a userId
 - `save_pipeline_artifact` — persists a skill's full JSON output to pipeline_artifacts
 
+## Frontend vision (replacing entropy scores)
+The dashboard shows raw, human-friendly storage metrics — not abstract scores.
+Data source: `pipeline_artifacts` table, specifically the `04-build-inventory` artifact.
+
+**What the dashboard displays:**
+- Connected platforms (Google Drive, Dropbox, local — from skill 00)
+- Total files, folders, storage used (from skills 01–02)
+- Files by category/tag with visual breakdown (from skills 03–04)
+- Issues found: duplicates, stale files, vague names, root clutter (from skill 04)
+- Pipeline run history: when it last ran, how many files changed
+
+**What it does NOT show:**
+- Entropy scores (removed — too abstract for users)
+- Technical scoring metrics
+
 ## Current focus
-- Define taxonomy, classification tree, and entropy rubric (core IP, in /mcp-server/src/)
-- Deploy frontend dashboard to Vercel
+- Seed `pipeline_artifacts` with realistic dummy data for frontend development
+- Redesign frontend history tab around raw storage metrics from skill artifacts
 - End-to-end pipeline run: skill 00 → 09 with artifact persistence
+- Define taxonomy classification rules in MCP server (core IP)
 
 ## Coding conventions
 - TypeScript everywhere
