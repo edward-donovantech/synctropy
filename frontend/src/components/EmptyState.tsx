@@ -6,10 +6,10 @@ export function EmptyState() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-4">
       <h2 className="text-xl font-semibold text-slate-200">
-        Your Drive hasn't been scanned yet.
+        Your Drive hasn't been organised yet.
       </h2>
       <p className="text-sm text-slate-400 max-w-sm">
-        Open Claude, connect Synctropy, and run your first scan to see your entropy score.
+        Open Claude, connect Synctropy, and run /00-scan-connectors to get started.
       </p>
       <Button
         variant="outline"
