@@ -1,80 +1,65 @@
 import { useState } from 'react'
-import { useScans, useScan } from '../lib/queries'
+import { useLatestRun, useRunInventory, useRunHistory, usePlatformInfo } from '../lib/artifact-queries'
 import { EmptyState } from '../components/EmptyState'
-import { TrendChart } from '../components/TrendChart'
-import { FolderSparklines } from '../components/FolderSparklines'
-import { ScanDetail } from '../components/ScanDetail'
-import type { ScanSummary } from '../types'
-
-function DeltaHeadline({ scans }: { scans: ScanSummary[] }) {
-  if (scans.length < 2) return null
-  const diff = scans[0].overall_score - scans[1].overall_score
-  const improved = diff < 0
-  const latestDate = new Date(scans[0].scanned_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-  const prevDate = new Date(scans[1].scanned_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-  return (
-    <div className="mb-6">
-      <p className={`text-3xl font-bold ${improved ? 'text-green-400' : 'text-red-400'}`}>
-        {improved ? '↓' : '↑'} {Math.round(Math.abs(diff) * 100)} pts{' '}
-        <span className="text-sm font-normal text-slate-400">since last scan</span>
-      </p>
-      <p className="text-xs text-slate-500 mt-1">
-        Overall entropy · {latestDate} vs {prevDate}
-      </p>
-    </div>
-  )
-}
+import { PlatformStrip } from '../components/PlatformStrip'
+import { CategoryBreakdown } from '../components/CategoryBreakdown'
+import { IssuesPanel } from '../components/IssuesPanel'
+import { RunHistory } from '../components/RunHistory'
 
 export default function HistoryPage() {
-  const { data: scans, isLoading, isError, refetch } = useScans()
-  const [selectedScanId, setSelectedScanId] = useState<string | null>(null)
+  const [selectedRunId, setSelectedRunId] = useState<string | null>(null)
+  const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
-  const latestScanId = scans?.[0]?.id ?? null
-  const selectedIndex = scans?.findIndex(s => s.id === selectedScanId) ?? -1
-  const previousScanId = selectedIndex >= 0 ? (scans?.[selectedIndex + 1]?.id ?? null) : null
+  const { data: latestRunId, isLoading: loadingLatest, isError } = useLatestRun()
+  const viewRunId = selectedRunId ?? latestRunId ?? null
 
-  // Always load latest scan for folder sparklines
-  const { data: latestScan } = useScan(latestScanId)
-  // Load selected + previous scan only when a point is clicked
-  const { data: selectedScan } = useScan(selectedScanId)
-  const { data: previousScan } = useScan(previousScanId)
+  const { data: inventory, isLoading: loadingInventory } = useRunInventory(viewRunId)
+  const { data: history, isLoading: loadingHistory } = useRunHistory()
+  const { data: connectors } = usePlatformInfo(viewRunId)
 
-  if (isLoading) {
+  if (loadingLatest || loadingHistory) {
     return <p className="text-slate-400 text-sm">Loading…</p>
   }
 
   if (isError) {
-    return (
-      <p className="text-slate-400 text-sm">
-        Couldn't load history.{' '}
-        <button onClick={() => refetch()} className="underline hover:text-slate-200">
-          Retry
-        </button>
-      </p>
-    )
+    return <p className="text-slate-400 text-sm">Couldn't load history.</p>
   }
 
-  if (!scans || scans.length === 0) {
+  if (!latestRunId) {
     return <EmptyState />
   }
 
   return (
     <div className="space-y-6">
-      <DeltaHeadline scans={scans} />
-      <TrendChart
-        scans={scans}
-        selectedId={selectedScanId}
-        onSelect={id => setSelectedScanId(prev => (prev === id ? null : id))}
-      />
-      {selectedScan && (
-        <ScanDetail
-          scan={selectedScan}
-          previousScan={previousScan ?? null}
-          onClose={() => setSelectedScanId(null)}
-        />
+      {connectors && <PlatformStrip platforms={connectors.platforms} />}
+
+      {inventory && (
+        <>
+          <CategoryBreakdown
+            categories={inventory.categories}
+            activeCategory={activeCategory}
+            onSelect={setActiveCategory}
+          />
+          <IssuesPanel
+            items={inventory.items}
+            activeCategory={activeCategory}
+          />
+        </>
       )}
-      {latestScan && latestScan.folder_scores.length > 0 && (
-        <FolderSparklines folderScores={latestScan.folder_scores} />
+
+      {loadingInventory && (
+        <p className="text-slate-400 text-sm">Loading inventory…</p>
+      )}
+
+      {history && (
+        <RunHistory
+          runs={history}
+          selectedRunId={selectedRunId}
+          onSelect={id => {
+            setSelectedRunId(prev => prev === id ? null : id)
+            setActiveCategory(null)
+          }}
+        />
       )}
     </div>
   )

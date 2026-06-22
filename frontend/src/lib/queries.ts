@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from './supabase'
-import type { UserPreferences, ScanSummary, EntropyScan } from '../types'
+import type { UserPreferences } from '../types'
 
 export function usePreferences() {
   const queryClient = useQueryClient()
@@ -41,37 +41,4 @@ export function usePreferences() {
     isSaving: mutation.isPending,
     saveError: mutation.error,
   }
-}
-
-export function useScans() {
-  return useQuery({
-    queryKey: ['scans'],
-    queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) throw new Error('Not authenticated')
-      const { data, error } = await supabase
-        .from('entropy_scans')
-        .select('id, scanned_at, overall_score')
-        .eq('user_id', user.id)
-        .order('scanned_at', { ascending: false })
-      if (error) throw error
-      return (data ?? []) as ScanSummary[]
-    },
-  })
-}
-
-export function useScan(id: string | null) {
-  return useQuery({
-    queryKey: ['scan', id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('entropy_scans')
-        .select('*')
-        .eq('id', id!)
-        .single()
-      if (error) throw error
-      return data as EntropyScan
-    },
-    enabled: !!id,
-  })
 }
