@@ -27,3 +27,5 @@ export type EntropyScan = {
 
 // Lightweight shape returned by useScans() — no folder_scores
 export type ScanSummary = Pick<EntropyScan, 'id' | 'scanned_at' | 'overall_score'>
+
+export type { IssueType, InventoryItem, CategoryStat, InventoryArtifact, ConnectedPlatform, ConnectorsArtifact, RunSummary } from './artifacts'
