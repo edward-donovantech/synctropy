@@ -12,12 +12,16 @@ below converts a claim into an artifact. Priority order is by (interview impact 
 **Effort:** 1-2 days. **Why:** every cover letter says "I shipped two production MCP servers" —
 right now a screener who goes looking finds nothing. That asymmetry kills credibility exactly when
 it's working.
-- ✅ README.md now exists at repo root (this commit) — review and adjust
-- Decide: make this repo public, or split a public "synctropy-mcp" repo with the server only
-  (keeps Supabase schema/business logic private). **Recommendation: split repo** — the MCP server
-  is the impressive part and the taxonomy rules are your IP.
-- Publish the server so it's runnable in one command: `npx synctropy-mcp` (npm) and list it on
-  the MCP registry / Smithery. "Installable by the interviewer during the call" is the bar.
+- ✅ README.md now exists at repo root — review and adjust
+- ✅ Public package split DONE — complete `synctropy-mcp` package lives in `public-package/synctropy-mcp/`:
+  the pure intelligence (classifier, taxonomy, entropy, operations, summary) with Supabase
+  persistence, premium config, and HTTP transport stripped out. Builds clean, 51 tests pass,
+  MCP stdio handshake + analyze_structure smoke-tested. npm names `synctropy-mcp` and `synctropy`
+  confirmed free.
+- ⏳ YOUR MOVE: run `public-package/push-to-new-repo.sh` (needs `gh` CLI logged in) — creates the
+  GitHub repo PRIVATE, pushes the package. Review it, then follow `PUBLISH.md` in the package to
+  flip public + `npm publish`. (Repo creation from this session was blocked by GitHub App
+  permissions, so this one step is yours.)
 - Pin the repo on your GitHub profile; add a profile README with the pitch line.
 - **Done when:** a stranger can go from your resume link to a running MCP server in Claude in
   under 5 minutes.

@@ -31,7 +31,7 @@ architectures, agent orchestration, and LLM-powered systems across the modern AI
 - Designed guardrails for agent-driven file operations: dry-run previews, protected-folder confirmation gates, and a strict server/client boundary so no file content ever touches the server.
 
 <!-- Unlock these bullets as PROJECT-ROADMAP.md items complete:
-- Published Synctropy's MCP server as an installable open-source package (npx synctropy-mcp); listed on the MCP registry  [after P0-1]
+- Published Synctropy's MCP server as an installable open-source package (npx synctropy-mcp); listed on the MCP registry  [READY — package built & tested in public-package/; unlock the moment you run push-to-new-repo.sh + npm publish]
 - Deployed with live customer data: [N] files organized, [X] hrs/week saved  [after P1-3]
 - Built an eval harness for the classification engine: [P]% precision across [K] domains, wired into CI as a regression gate  [after P1-4]
 -->

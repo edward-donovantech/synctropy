@@ -1,0 +1,51 @@
+{
+  "name": "synctropy-mcp",
+  "version": "0.1.0",
+  "description": "AI-native file intelligence as an MCP server. Entropy scoring, taxonomy classification, and reorganization planning for any file tree — fully offline, no data leaves your machine.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "synctropy-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "ai-agents",
+    "file-organization",
+    "claude",
+    "entropy",
+    "classification"
+  ],
+  "author": "Edward Donovan <ejoseph.donovan@gmail.com> (https://www.linkedin.com/in/edwardjdonovan)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edward-donovantech/synctropy-mcp.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  }
+}
