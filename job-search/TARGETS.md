@@ -1,63 +1,65 @@
 # Target List — AI Startup SA / SE / FDE Roles
 
-Last updated: 2026-07-11
+Last updated: 2026-07-13 (v2 — restructured after specific posting links went stale)
 Positioning: Solutions Architect / Sales Engineer / Forward-Deployed Engineer at AI-native companies.
 Constraint: Remote-US or Boston hybrid.
 
-Market context: FDE-type postings grew ~800% YoY into 2026 — this is the hottest role shape
-for your exact profile (pre-sales + hands-on build + enterprise credibility).
+## ⚠️ Lesson learned: hunt companies, not postings
+
+The v1 list linked specific postings; several were dead within days. FDE/SE postings at hot AI
+companies rot fast — they close, repost under new IDs, or move between boards. Durable strategy:
+
+1. **Company careers pages are the only stable URLs.** Check Tier 1 pages every Mon/Thu morning
+   (15 min). Role IDs change; hiring appetite doesn't.
+2. **Set LinkedIn saved-search alerts** (daily email):
+   - "forward deployed engineer" — remote US
+   - "solutions architect" AND (AI OR LLM OR agents) — remote US
+   - "solutions engineer" — Boston
+3. **Outreach beats apply buttons.** A dead posting doesn't mean they stopped hiring — message
+   the hiring manager (texts below) even with no live req. At hot companies, FDE seats are often
+   created for strong candidates, not filled from queues.
+
+Market context still holds: FDE-type postings grew ~800% YoY into 2026 — these companies hire
+this shape continuously even when a given req is closed.
 
 ---
 
-## Tier 1 — Apply + outreach today
+## Tier 1 — Careers-page check Mon/Thu + outreach regardless of posting status
 
-### 1. Anthropic — Forward Deployed Engineer, Applied AI (Remote-US)
-- **Apply:** https://job-boards.greenhouse.io/anthropic/jobs/4985877008
-- **Why fit:** Role asks for 3+ yrs technical customer-facing work; you have 10+. Your MCP-native
-  architecture work (Synctropy, BackBurn) is literally built on Anthropic's protocol — almost nobody
-  applying can say they've designed and shipped production MCP servers.
-- **Angle:** Lead with MCP. "I've built two production MCP server architectures" is a first-line hook.
-- **Speed:** Frontier-lab process, likely 3-5 weeks. Start now, don't count on it for July income.
+### 1. Anthropic — FDE / Applied AI (Remote-US)
+- **Careers:** https://www.anthropic.com/careers → Applied AI
+- **Why fit:** Your MCP-native architecture work is built on Anthropic's own protocol — almost
+  nobody applying can say they've designed and shipped production MCP servers.
+- **Angle:** Ship the public synctropy-mcp package FIRST, then apply with the link in line one.
+- **Speed:** Frontier-lab process, 3-5 weeks. Start now; don't count on it for July income.
 
-### 2. Glean — Founding Forward Deployed Engineer (Remote-US, $160-270K)
-- **Apply:** https://job-boards.greenhouse.io/gleanwork/jobs/4651991005
-- **Also open:** Solutions Engineer — https://job-boards.greenhouse.io/gleanwork
-- **Why fit:** They want a "0-to-1 build track record" + exec-level trust. Synctropy/BackBurn are your
-  0-to-1 proof; $15M+ deal value at Siemens is the exec-trust proof. 25-50% travel — confirm you're OK.
-- **Angle:** Founder-who-also-sold. Emphasize repositioning Synctropy after reading the market — that's
-  the judgment they're screening for.
-- **Speed:** Startup pace, 2-4 weeks plausible.
+### 2. Glean — FDE / Solutions Engineer (Remote-US)
+- **Careers:** https://www.glean.com/careers
+- **Why fit:** They screen for "0-to-1 build track record" + exec-level trust. Synctropy/BackBurn
+  are the 0-to-1 proof; $15M+ at Siemens is the exec-trust proof.
+- **Angle:** Founder-who-also-sold. Emphasize the Synctropy repositioning judgment call.
 
-### 3. Decagon — FDE / Solutions Engineer (SF/NYC/Remote)
+### 3. Decagon — FDE / Solutions Engineer (SF/NYC, some remote)
 - **Careers:** https://decagon.ai/careers
-- **Why fit:** Direct Maven AGI competitor (same CX-agent space). Everything you prepped for the Maven
-  loop — the domain research, the demo, the presentation — transfers with near-zero rework.
-- **Angle:** "I just went deep on the CX-agent space" without naming Maven. Your Siemens enterprise-CX
-  integration stories (fare systems = high-volume consumer touchpoints) land well here.
-- **Speed:** Fast-growing startup, 2-3 weeks plausible.
+- **Why fit:** Direct Maven AGI competitor — your Maven prep transfers with near-zero rework.
+- **Angle:** "Deep in agentic CX architecture" without naming Maven. Fare systems = high-volume
+  consumer transaction integration, exactly the surface CX agents live in.
 
-### 4. Sierra — Agent Engineer / Solutions role (SF-heavy, some remote)
+### 4. Sierra — Agent Engineer / Solutions (SF-heavy, some remote)
 - **Careers:** https://sierra.ai/careers
-- **Why fit:** Same CX-agent thesis as Decagon; Bret Taylor's company, prestige + scale. They hire
-  "engineers who deploy production AI systems with enterprise clients" — your exact lane.
-- **Angle:** Same Maven-prep reuse. Check location flexibility early — they skew in-person SF.
-- **Speed:** 3-4 weeks.
+- **Angle:** Same CX-prep reuse. Confirm location flexibility before investing time — they skew SF.
 
-### 5. Code Metal — Forward Deployed Engineer (BOSTON — local edge)
-- **Posting:** https://www.builtinboston.com/job/forward-deployed-engineer/9076706
-- **Why fit:** Boston-local, so your in-person availability is a differentiator (like Maven was).
-  They do AI for embedded/edge dev — your C/C++ embedded Linux + Bytemark hardware background is a
-  rare match most AI-startup applicants can't touch.
-- **Angle:** Lead with the embedded+AI combination: patented BLE ticketing hardware co-inventor who
-  now builds MCP architectures. That Venn diagram is basically just you.
-- **Speed:** Small company, potentially fastest full-time close on this list. **Apply first.**
+### 5. Code Metal — FDE (BOSTON — local edge)
+- **Careers:** https://www.codemetal.ai + LinkedIn company page (small team — founders answer DMs)
+- **Why fit:** Boston-local AI for embedded/edge — your C/C++ embedded Linux + two hardware patents
+  is a combination most AI-startup applicants can't touch.
+- **Angle:** Lead with embedded+AI Venn diagram. **Highest-priority outreach on this list** —
+  even if no req is currently live.
 
-### 6. Intercom (Fin) — Solutions Engineer / Sales Engineer
+### 6. Intercom (Fin) — Solutions Engineer (Remote)
 - **Careers:** https://www.intercom.com/careers
-- **Why fit:** Fin is the market leader in the CX-agent space you just prepped. Larger org = more
-  structured comp, real SE career track, and they hire remote.
+- **Why fit:** Market leader in the CX-agent space you prepped; real SE career track, remote-friendly.
 - **Angle:** Enterprise SE motion (RFPs, demos, PoCs) is your Siemens muscle memory.
-- **Speed:** Mid-size company process, 3-5 weeks.
 
 ---
 
@@ -72,7 +74,7 @@ for your exact profile (pre-sales + hands-on build + enterprise credibility).
 | Forethought | Solutions Engineer | https://forethought.ai/careers | Maven competitor, smaller |
 | Retool | Sales Engineer | https://retool.com/careers | Internal-tools + AI agents push |
 | Vercel | Solutions Engineer | https://vercel.com/careers | You already deploy on Vercel (frontend) |
-| Gecko Robotics | Forward Deployed Engineer | https://www.builtinboston.com/job/forward-deployed-software-engineer/4683061 | Boston; robotics+AI, hardware background helps |
+| Gecko Robotics | Forward Deployed Engineer | https://www.geckorobotics.com/careers | Boston; robotics+AI, hardware background helps |
 | Blitzy | SA/GTM technical | https://blitzy.com | Boston; you already follow them on LinkedIn — engage a post, then DM founder |
 | Recorded Future | Solutions Architect | https://www.recordedfuture.com/careers | Boston, stable, security domain |
 | DataRobot | AI Solutions Architect | https://www.datarobot.com/careers/ | Boston, enterprise AI |
