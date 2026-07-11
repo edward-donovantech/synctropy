@@ -1,6 +1,7 @@
 # Edward J. Donovan
 
 Boston, MA | (617) 438-8892 | ejoseph.donovan@gmail.com | linkedin.com/in/edwardjdonovan
+github.com/edwardjdonovan | [demo video link — record per PROJECT-ROADMAP.md P0] | donovantechnology.com
 
 > Working copy for AI-startup SA / SE / FDE applications. Adapted from the Maven AGI resume
 > (which stays the PDF source of truth). Diffs from that version are marked with ✏️ notes at the bottom.
@@ -16,7 +17,7 @@ architectures, agent orchestration, and LLM-powered systems across the modern AI
 ## Core Capabilities
 
 - **Customer-facing:** Technical demos, PoC ownership, RFP responses, pre-SOW scoping, enterprise sales cycles, CTO-level engagement, onsite deployment
-- **AI & Agentic Systems:** LLM APIs (Anthropic, OpenAI), MCP server architecture, agent orchestration, agentic SDLC, evals, multi-cloud integration
+- **AI & Agentic Systems:** LLM APIs (Anthropic, OpenAI), MCP server architecture, agent orchestration, evals & regression gates, guardrails, human-in-the-loop design, agentic SDLC, multi-cloud integration
 - **Engineering:** Python, TypeScript/Node.js, Spring Boot/Java, C/C++ (embedded Linux), AWS, Docker, REST APIs, CI/CD, Supabase/Postgres
 
 ## Experience
@@ -27,6 +28,14 @@ architectures, agent orchestration, and LLM-powered systems across the modern AI
 - Designed and shipped a production MCP server (Node.js/TypeScript, stdio + HTTP transports, deployed on Railway) that decouples organizational intelligence from storage integrations, enabling compatibility with any MCP-compatible AI client.
 - Architected a 12-skill agentic pipeline where deterministic rules, persistence, and user config live server-side while the AI client owns judgment calls and execution — a clean human-in-the-loop agent design.
 - Repositioned the original web dashboard into an AI-native MCP product after identifying that LLM platforms were commoditizing the UI layer; conducted structured customer discovery across 4+ industries to validate the pivot.
+- Designed guardrails for agent-driven file operations: dry-run previews, protected-folder confirmation gates, and a strict server/client boundary so no file content ever touches the server.
+
+<!-- Unlock these bullets as PROJECT-ROADMAP.md items complete:
+- Published Synctropy's MCP server as an installable open-source package (npx synctropy-mcp); listed on the MCP registry  [after P0-1]
+- Deployed with live customer data: [N] files organized, [X] hrs/week saved  [after P1-3]
+- Built an eval harness for the classification engine: [P]% precision across [K] domains, wired into CI as a regression gate  [after P1-4]
+-->
+
 
 **BackBurn — Fractional CTO (AI Coaching Platform)**
 - Designed an AI-native platform using MCP server architecture to integrate domain-specific intelligence directly into AI agents.
@@ -66,3 +75,19 @@ B.S. Electrical Engineering & B.S. Physics — Trinity College, Hartford, CT
 3. **Synctropy bullets rewritten** with deployment specifics (Node.js/TypeScript, Railway, stdio+HTTP transports) and the 12-skill agentic pipeline — turns "designed" into "shipped."
 4. **Core capabilities:** added "evals," "onsite deployment," and named LLM providers; added Supabase/Postgres.
 5. **Per-application tweak list:** for Anthropic lead with MCP everywhere; for Code Metal move the embedded/C++ line up; for CX companies (Decagon/Sierra/Intercom) add a line on high-volume consumer transaction systems from transit.
+
+## ✏️ Improvement checklist (what this resume still needs — from Phase 2 review)
+
+**Fix now (before next application batch):**
+1. **Links line** — added above, but the demo-video placeholder must become a real link (PROJECT-ROADMAP.md P0-2) and confirm the GitHub handle. A resume claiming "shipped two production MCP servers" with nothing clickable reads as unverified.
+2. **FDE vocabulary** — evals, guardrails, human-in-the-loop now appear where truthful. Do NOT add RAG/fine-tuning unless you actually do it; FDE interviewers probe every keyword.
+3. **Numbers on the AI work.** The Siemens bullets have $15M/$990K/83 apps; the Synctropy bullets have zero numbers — the contrast whispers "the AI work isn't real yet." Even honest small numbers beat none: tools exposed, artifact types persisted, test count, discovery interviews (4+ industries is already there — keep mining for more).
+
+**Fix as projects land (see PROJECT-ROADMAP.md):**
+4. Swap in the unlock bullets (npm package, customer deployment metrics, eval precision) as each completes — these three bullets are worth more than everything else on this checklist combined.
+
+**Per-company one-line swaps for the Summary's last sentence:**
+- Anthropic: "...including two production MCP servers built on Anthropic's protocol and SDK."
+- Code Metal: "...combining a decade of embedded systems (C/C++, two hardware patents) with current agentic-AI depth."
+- Decagon/Sierra/Intercom: "...with recent deep work in agentic CX architecture and enterprise support automation."
+- Glean: "...as a 0-to-1 founder who has also carried $15M+ of enterprise pre-sales."
