@@ -14,7 +14,11 @@
       "Bash(npm list *)",
       "Bash(node -e ' *)",
       "Bash(node *)",
-      "Bash(dir C:\\\\Users\\\\ejose\\\\dev\\\\synctropy-mcp-server\\\\mcp-server\\\\src *)"
+      "Bash(dir C:\\\\Users\\\\ejose\\\\dev\\\\synctropy-mcp-server\\\\mcp-server\\\\src *)",
+      "Bash(npm run *)",
+      "mcp__playwright__browser_navigate",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\ejose\\\\dev\\\\synctropy\\\\mcp-server\" -File -Name | Where-Object {$_ -match '\\\\.\\(js|ts|json\\)$'})",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\ejose\\\\dev\\\\synctropy\\\\mcp-server\\\\src\" -Recurse -File -Name | Where-Object {$_ -match '\\\\.\\(js|ts|json\\)$'})"
     ]
   },
   "enabledMcpjsonServers": [

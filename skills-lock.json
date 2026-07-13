@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "file-organizer": {
+      "source": "ComposioHQ/awesome-claude-skills",
+      "sourceType": "github",
+      "skillPath": "file-organizer/SKILL.md",
+      "computedHash": "bb1298b01e0e538f22a1a40014c89f5daf03996e726c1b97239c296e5b10522f"
+    }
+  }
+}

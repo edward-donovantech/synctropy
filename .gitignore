@@ -2,3 +2,5 @@
 dist/
 .env
 .env.local
+scripts/seed_drive/venv/
+.claude/settings.local.json
