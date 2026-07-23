@@ -51,13 +51,22 @@ Use the LinkedIn blurb from `PITCH.md` as the opener, then expand:
 
 ## 3. Experience section rewrite
 
-**Donovan Technology LLC — split into visible product lines** (LinkedIn lets you stack roles under
-one company):
-- Title: "Founder & Solutions Architect" (not just Founder & CEO — keep the SA keyword present)
-- Synctropy entry: copy the three bullets from `RESUME-AI-SA.md` (the shipped-production versions
-  with Node.js/TypeScript, Railway, 12-skill agentic pipeline)
-- BackBurn entry: fractional CTO framing — "AI adoption strategy, agentic system design, vendor
-  evaluation for early-stage clients"
+**Donovan Technology LLC — one company header, two clearly separated positions underneath**
+(LinkedIn lets you stack multiple roles under one company — use it; don't let two unrelated
+bullet lists sit under one ambiguous title like the old resume did).
+
+- **Company-level title:** "Founder & Principal" with the company's own one-line description field
+  filled in: *"Independent practice designing and shipping AI-native, MCP-based systems — building
+  my own products and serving as fractional technical leadership for early-stage AI companies."*
+  This single sentence is what was missing before — without it, a reader can't tell if Synctropy
+  and BackBurn are two jobs, two side projects, or one confused entry.
+- **Position 1 — Synctropy, Founder & CEO** (list first: it's the stronger, most concrete material):
+  copy the three bullets from `RESUME-AI-SA.md` (shipped-production MCP server, Node.js/TypeScript,
+  Railway, the 12-skill agentic pipeline with its determinism boundary).
+- **Position 2 — BackBurn, Fractional CTO** (list second): "Serve as fractional CTO for BackBurn, an
+  early-stage AI coaching platform, owning architecture decisions, AI adoption strategy, and vendor
+  evaluation for the founding team" — named and singular, not "advising early-stage clients"
+  (plural/vague reads as unverifiable; naming the one company you actually serve reads as real).
 
 **Siemens:** keep bullets, but retitle the summary line to include both keywords:
 "Solution Architect (pre-sales / forward-deployed): $15M+ deal value..."

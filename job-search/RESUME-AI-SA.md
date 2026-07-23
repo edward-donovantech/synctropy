@@ -23,6 +23,7 @@ architectures, agent orchestration, and LLM-powered systems across the modern AI
 ## Experience
 
 ### Donovan Technology LLC — Founder | April 2024 – Present
+*Independent practice designing and shipping AI-native, MCP-based systems — building my own products and serving as fractional technical leadership for early-stage AI companies.*
 
 **Synctropy — Founder & CEO (AI-Native File Intelligence)**
 - Designed and shipped a production MCP server (Node.js/TypeScript, stdio + HTTP transports, deployed on Railway) that decouples organizational intelligence from storage integrations, enabling compatibility with any MCP-compatible AI client.
@@ -38,9 +39,9 @@ architectures, agent orchestration, and LLM-powered systems across the modern AI
 
 
 **BackBurn — Fractional CTO (AI Coaching Platform)**
-- Designed an AI-native platform using MCP server architecture to integrate domain-specific intelligence directly into AI agents.
-- Validated system architecture with a hypothesis-driven experiment framework tracing decisions from customer assumptions through capability requirements to implementation.
-- Advise early-stage clients on AI adoption strategy, agentic system design, and vendor evaluation.
+- Serve as fractional CTO for BackBurn, an early-stage AI coaching platform, owning architecture decisions, AI adoption strategy, and vendor evaluation for the founding team.
+- Designed an MCP-based architecture integrating domain-specific coaching intelligence directly into AI agents.
+- Validated the system design using a hypothesis-driven experiment framework tracing decisions from customer assumptions through capability requirements to implementation.
 
 ### Siemens (acquired Bytemark) — Solution Architect | October 2019 – April 2024
 - Partnered with sales to win $15M+ in new deal value through technical RFP strategy, solution designs, and executive-level presentations to CTOs and procurement leaders.
