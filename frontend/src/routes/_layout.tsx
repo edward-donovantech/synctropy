@@ -38,12 +38,22 @@ export default function DashboardLayout() {
                 Settings
               </Link>
             </div>
-            <button
-              onClick={handleSignOut}
-              className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
-            >
-              Sign out
-            </button>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://github.com/edward-donovantech/synctropy/blob/main/docs/ONBOARDING.md"
+                target="_blank"
+                rel="noopener"
+                className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+              >
+                Guide
+              </a>
+              <button
+                onClick={handleSignOut}
+                className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+              >
+                Sign out
+              </button>
+            </div>
           </div>
         </nav>
         <main className="px-6 py-6 max-w-4xl mx-auto">
