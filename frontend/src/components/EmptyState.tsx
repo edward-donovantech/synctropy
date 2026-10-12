@@ -1,6 +1,6 @@
 import { Button } from './ui/button'
 
-const DOCS_URL = 'https://docs.getsynctropy.com/first-scan'
+const DOCS_URL = 'https://github.com/edward-donovantech/synctropy/blob/main/docs/ONBOARDING.md'
 
 export function EmptyState() {
   return (
